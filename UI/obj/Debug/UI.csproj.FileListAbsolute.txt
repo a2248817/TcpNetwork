@@ -1,0 +1,16 @@
+C:\Users\my\Desktop\C#\TcpNetWork\UI\bin\Debug\UI.exe.config
+C:\Users\my\Desktop\C#\TcpNetWork\UI\bin\Debug\UI.exe
+C:\Users\my\Desktop\C#\TcpNetWork\UI\bin\Debug\UI.pdb
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.csproj.AssemblyReference.cache
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\MainWindow.g.cs
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\App.g.cs
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI_MarkupCompile.cache
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI_MarkupCompile.lref
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\MainWindow.baml
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.g.resources
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.Properties.Resources.resources
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.csproj.GenerateResource.cache
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.csproj.CoreCompileInputs.cache
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.exe
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\UI.pdb
+C:\Users\my\Desktop\C#\TcpNetWork\UI\obj\Debug\GeneratedInternalTypeHelper.g.cs

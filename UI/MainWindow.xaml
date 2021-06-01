@@ -1,0 +1,245 @@
+﻿<Window
+    x:Class="UI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Properties="clr-namespace:UI.Properties"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:UI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Network"
+    Width="1280"
+    Height="720"
+    BorderBrush="#86C3F9"
+    BorderThickness="5"
+    FontSize="20"
+    ResizeMode="CanMinimize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d" Closing="Window_Closing">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2.5*" />
+            <ColumnDefinition Width="2.5*" />
+            <ColumnDefinition Width="5*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="本機">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label VerticalAlignment="Center" Content="Address" />
+                <TextBlock
+                    Grid.Column="1"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{Binding Path=Server.Address}" />
+                <Label
+                    Grid.Row="1"
+                    VerticalAlignment="Center"
+                    Content="Port" />
+                <TextBlock
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="{Binding Path=Server.Port}" />
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="ServerStart"
+                        Margin="30,10"
+                        Click="ServerStart_Click"
+                        Content="啟動">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button
+                        x:Name="ServerStop"
+                        Grid.Column="1"
+                        Margin="30,10"
+                        Click="ServerStop_Click"
+                        Content="關閉">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <GroupBox Grid.Column="1" Header="遠端">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label
+                    Margin="0,5,10,0"
+                    VerticalAlignment="Center"
+                    Content="Address" />
+                <TextBox
+                    x:Name="RemoteAddress"
+                    Grid.Column="1"
+                    Width="180"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="218.161.85.226"
+                    TextAlignment="Right" />
+                <Label
+                    Grid.Row="1"
+                    Margin="0,5,10,0"
+                    VerticalAlignment="Center"
+                    Content="Port" />
+                <TextBox
+                    x:Name="RemotePort"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Width="180"
+                    Margin="0,5,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Text="65565"
+                    TextAlignment="Right" />
+                <Grid Grid.Row="2" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        x:Name="RemoteStart"
+                        Margin="30,10"
+                        Click="RemoteStart_Click"
+                        Content="連線">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                    <Button
+                        x:Name="RemoteStop"
+                        Grid.Column="1"
+                        Margin="30,10"
+                        Click="RemoteStop_Click"
+                        Content="中斷">
+                        <Button.Resources>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="CornerRadius" Value="10" />
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <GroupBox
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            Header="訊息">
+            <ListView
+                x:Name="MSG"
+                FontSize="15"
+                ItemsSource="{Binding FileExample}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Source}">
+                            <GridViewColumnHeader
+                                Margin="5,0,0,0"
+                                HorizontalContentAlignment="Left"
+                                Content="來源"
+                                SizeChanged="GridViewColumnHeader_SizeChanged" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}">
+                            <GridViewColumnHeader
+                                Margin="5,0,0,0"
+                                HorizontalContentAlignment="Left"
+                                Content="名稱"
+                                SizeChanged="GridViewColumnHeader_SizeChanged" />
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Size}">
+                            <GridViewColumnHeader
+                                Margin="5,0,0,0"
+                                HorizontalContentAlignment="Left"
+                                Content="大小"
+                                SizeChanged="GridViewColumnHeader_SizeChanged" />
+                        </GridViewColumn>
+
+                    </GridView>
+
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Header="本機連線">
+            <ListView FontSize="15" ItemsSource="{Binding Path=Server.LocalClients}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=Address}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="Address" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding Path=Port}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="Port" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding Path=Connecting}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="狀態" />
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <GroupBox
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Header="遠端連線">
+            <ListView FontSize="15" ItemsSource="{Binding Path=Server.RemoteClients}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="150" DisplayMemberBinding="{Binding Path=Address}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="Address" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding Path=Port}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="Port" />
+                        </GridViewColumn>
+                        <GridViewColumn Width="70" DisplayMemberBinding="{Binding Path=Connecting}">
+                            <GridViewColumnHeader HorizontalContentAlignment="Left" Content="狀態" />
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
+        <Button
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="250,70"
+            Click="Button_Click" />
+    </Grid>
+</Window>
