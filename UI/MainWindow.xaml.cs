@@ -1,26 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using UI.Model;
+using UI.DataPackage;
+using System.Threading.Tasks;
+using System.Threading;
+using UI.Network;
 
 namespace UI
 {
@@ -29,16 +16,6 @@ namespace UI
     /// </summary>
     public partial class MainWindow : INotifyPropertyChanged
     {
-        private UIServer _Server { get; set; }
-        public UIServer Server
-        {
-            get { return _Server; }
-            set
-            {
-                _Server = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
-            }
-        }
         public MainWindow()
         {
             InitializeComponent();
@@ -53,60 +30,55 @@ namespace UI
             header.Column.Width = 600 / 3;
             e.Handled = true;
         }
-        public ObservableCollection<FileModel> FileExample { get; set; } = FileModel.fileModels;
 
+        public MessageServer Server { get; set; }
         private void ServerStart_Click(object sender, RoutedEventArgs e)
         {
-            if (Server == null)
-            {
-                Server = new UIServer();
-            }
+            Server = new MessageServer();
             Server.Start();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
-        private async void ServerStop_Click(object sender, RoutedEventArgs e)
+        private void ServerStop_Click(object sender, RoutedEventArgs e)
         {
-            if (Server != null)
-            {
-                await Server.Stop();
-            }
+            Server.Stop();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
-
+        public ObservableCollection<MessageClient> Clients { get; set; } = new ObservableCollection<MessageClient>();
         private void RemoteStart_Click(object sender, RoutedEventArgs e)
         {
-            var client = new UIClient(new TcpClient());
-            if (client.Connect(RemoteAddress.Text, Convert.ToInt32(RemotePort.Text).ToString()) == true)
-            {
-                Server.RemoteClients.Add(client);
-            }
+            var client = new MessageClient();
+            client.Start(RemoteAddress.Text, RemotePort.Text);
+            Clients.Add(client);
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
         private void RemoteStop_Click(object sender, RoutedEventArgs e)
         {
-            if (Server != null)
+            foreach (var client in Clients)
             {
-                foreach (var client in Server.RemoteClients)
-                {
-                    client.Stop();
-                }
-                Server.RemoteClients.Clear();
+                client.Stop();
             }
+            Clients.Clear();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileExample.Add(new FileModel("local", $"{DateTime.Now}", 123456));
-            foreach (var file in FileExample)
-            {
-                Debug.WriteLine($"{file.Source} {file.Name} {file.Size}");
-            }
-            Debug.WriteLine($"add{RemoteAddress.Width}  por{RemotePort.Width}");
+            var client = (RemoteConnections.SelectedItem as MessageClient);
+            client.Send($"{DateTime.Now}");
+            //MSG.ItemsSource = Server.Clients[0].Messages;
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             RemoteStop_Click(this, new RoutedEventArgs());
             ServerStop_Click(this, new RoutedEventArgs());
+        }
+
+        private void RemoteConnections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            MSG.ItemsSource = (RemoteConnections.SelectedItem as MessageClient)?.Messages;
         }
     }
 

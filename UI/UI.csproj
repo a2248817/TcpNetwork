@@ -70,9 +70,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ClientModel.cs" />
     <Compile Include="Model\FileModel.cs" />
-    <Compile Include="Model\ServerModel.cs" />
+    <Compile Include="DataPackage\MessagePackage.cs" />
+    <Compile Include="Network\MessageClient.cs" />
+    <Compile Include="Network\MessageServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
